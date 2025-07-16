@@ -1,12 +1,17 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+"use client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
+  const router = useRouter();
+  console.log(router);
   return (
     <form className={cn("flex flex-col gap-6", className)} {...props}>
       <div className="flex flex-col items-center gap-2 text-center">
@@ -40,14 +45,38 @@ export function LoginForm({
             Or continue with
           </span>
         </div>
-        <Button variant="outline" className="w-full">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <Button
+          variant="outline"
+          className="w-full"
+          onClick={() => {
+            signIn("google", {
+              callbackUrl: "/dashboard",
+            });
+          }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            className="w-5 h-5 mr-2"
+          >
             <path
-              d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
-              fill="currentColor"
+              d="M23.999 7.818l-6.81-4.744c-1.131-.756-2.616-.755-3.746 0l-6.79 4.77 1.57 6.233c.313 1.174.314 2.349 0 3.523L5.424 22l6.916-4.817c1.13-.76 2.617-.76 3.746 0l6.79 4.772 1.57-6.233c.314-1.174.314-2.349 0-3.523L23.999 7.818z"
+              fill="#4285F4"
+            />
+            <path
+              d="M12.568 15.422c-.76.57-1.735.9-2.827.9-1.096 0-2.072-.33-2.83-1.09L3.082 12l4.656-3.476c.76-.57 1.735-.9 2.827-.9 1.094 0 2.068.33 2.828 1.09l4.655 3.475-4.655 3.475z"
+              fill="#34A853"
+            />
+            <path
+              d="M7.377 19.2c-.18-.54-.282-1.11-.282-1.71s.103-1.17.283-1.71l-.087-2.832c-.087-.267-.138-.556-.138-.865s.05-.598.138-.864l.087-2.832c-.18-.54-.283-1.11-.283-1.71s.103-1.17.283-1.71l-.087-2.832c-.087-.267-.138-.556-.138-.865s.05-.598.138-.864l.087-2.832c-.76.57-1.735.9-2.827.9-1.096 0-2.072-.33-2.83-1.09L.165 5.087C-.03 4.55-.03 3.99 0 3.45l.087-2.832c.087-.267.138-.556.138-.865s-.05-.598-.138-.864L.165.165C-.03-.385-.03-1.02 0-1.575l.087-2.832c.76-.57 1.735-.9 2.827-.9 1.094 0 2.068.33 2.828 1.09l4.655 3.476-4.655 3.475z"
+              fill="#FBBC05"
+            />
+            <path
+              d="M19.552 3.828l-4.655-3.475c-.76-.57-1.735-.9-2.827-.9-1.094 0-2.068.33-2.828 1.09l-4.655 3.475 4.655 3.476c.76.57 1.735.9 2.827.9 1.096 0 2.072-.33 2.83-1.09l4.656-3.476 1.57 6.233c.313 1.174.314 2.349 0 3.523L19.552 3.828z"
+              fill="#EA4335"
             />
           </svg>
-          Login with GitHub
+          Login with Google
         </Button>
       </div>
       <div className="text-center text-sm">
@@ -57,5 +86,5 @@ export function LoginForm({
         </a>
       </div>
     </form>
-  )
+  );
 }
